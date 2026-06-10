@@ -3,7 +3,7 @@
   "displayName": "Developer Garden",
   "description": "A living visual garden grown from your real work \u2014 projects, skills, achievements, and your whole journey as a developer.",
   "version": "0.1.0",
-  "publisher": "YOUR-PUBLISHER-ID",
+  "publisher": "josejoy2216",
   "license": "MIT",
   "engines": {
     "vscode": "^1.85.0"
@@ -96,7 +96,7 @@
   "icon": "media/marketplace-icon.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/YOUR-GITHUB/developer-garden"
+    "url": "https://github.com/josejoy2216/developer-garden"
   },
   "galleryBanner": {
     "color": "#1d2a22",
