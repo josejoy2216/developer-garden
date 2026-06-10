@@ -1,0 +1,105 @@
+{
+  "name": "developer-garden",
+  "displayName": "Developer Garden",
+  "description": "A living visual garden grown from your real work \u2014 projects, skills, achievements, and your whole journey as a developer.",
+  "version": "0.1.0",
+  "publisher": "YOUR-PUBLISHER-ID",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Visualization",
+    "Other"
+  ],
+  "keywords": [
+    "garden",
+    "journey",
+    "progress",
+    "motivation",
+    "history"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "developerGarden",
+          "title": "Developer Garden",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "developerGarden": [
+        {
+          "type": "webview",
+          "id": "developerGarden.gardenView",
+          "name": "Garden",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "developerGarden.open",
+        "title": "Developer Garden: Open Garden"
+      },
+      {
+        "command": "developerGarden.dailySummary",
+        "title": "Developer Garden: Today's Summary"
+      },
+      {
+        "command": "developerGarden.weeklySummary",
+        "title": "Developer Garden: This Week's Summary"
+      },
+      {
+        "command": "developerGarden.exportData",
+        "title": "Developer Garden: Export Garden Data (JSON)"
+      }
+    ],
+    "configuration": {
+      "title": "Developer Garden",
+      "properties": {
+        "developerGarden.statusBar.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show today's garden growth in the status bar."
+        },
+        "developerGarden.summaries.endOfDayReminder": {
+          "type": "boolean",
+          "default": false,
+          "description": "Show a gentle, dismissible end-of-day summary toast (off by default \u2014 the garden never nags)."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "vscode:prepublish": "npm run compile",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/node": "^20.x",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.4.0",
+    "@vscode/vsce": "^3.0.0"
+  },
+  "author": {
+    "name": "Jose Chacko"
+  },
+  "icon": "media/marketplace-icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR-GITHUB/developer-garden"
+  },
+  "galleryBanner": {
+    "color": "#1d2a22",
+    "theme": "dark"
+  }
+}

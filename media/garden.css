@@ -1,0 +1,287 @@
+/* Developer Garden — sidebar styles.
+   Palette ("evening meadow"):
+     loam    #1d2a22   moss   #3e5c44   leaf  #7fb069
+     bloom   #e8c170   petal  #d98e73   sky-day #cfe3d2 → #f0f4e3
+     sky-dusk #1b2735 → #41506b
+   Display type is a serif on purpose — a garden journal, not a dashboard. */
+
+:root {
+  --loam: #1d2a22;
+  --moss: #3e5c44;
+  --leaf: #7fb069;
+  --bloom: #e8c170;
+  --petal: #d98e73;
+  --ink: var(--vscode-foreground);
+  --muted: var(--vscode-descriptionForeground);
+  --card: var(--vscode-editorWidget-background, rgba(127, 176, 105, 0.06));
+  --line: var(--vscode-widget-border, rgba(127, 176, 105, 0.25));
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0;
+  color: var(--ink);
+  font-family: var(--vscode-font-family);
+  font-size: var(--vscode-font-size);
+}
+
+h1, h2, h3, .display {
+  font-family: ui-serif, Georgia, 'Times New Roman', serif;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+#tabs {
+  display: flex;
+  gap: 2px;
+  padding: 6px 8px 0;
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  background: var(--vscode-sideBar-background);
+  z-index: 2;
+}
+
+#tabs button {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  padding: 6px 8px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+#tabs button.active {
+  color: var(--ink);
+  border-bottom-color: var(--leaf);
+}
+
+#tabs button:focus-visible {
+  outline: 1px solid var(--vscode-focusBorder);
+  outline-offset: -1px;
+}
+
+#root { padding: 10px 10px 24px; }
+
+.muted { color: var(--muted); }
+.small { font-size: 0.85em; }
+
+/* ------------------------------------------------ garden scene */
+
+.scene-wrap {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--loam);
+}
+
+.scene-wrap svg { display: block; width: 100%; height: auto; }
+
+.welcome-back {
+  margin: 10px 0 2px;
+  padding: 8px 10px;
+  border-left: 3px solid var(--bloom);
+  background: var(--card);
+  border-radius: 0 6px 6px 0;
+  font-family: ui-serif, Georgia, serif;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  margin-top: 8px;
+}
+
+.legend span { font-size: 0.85em; color: var(--muted); }
+.legend b { color: var(--ink); font-weight: 500; }
+
+/* ------------------------------------------------ cards & lists */
+
+.card {
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin: 8px 0;
+}
+
+.card h3 { margin: 0 0 4px; font-size: 1.02em; }
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 2px;
+  border-bottom: 1px dashed var(--line);
+}
+.row:last-child { border-bottom: none; }
+.row .grow { flex: 1; min-width: 0; }
+.row .name { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.stagebar {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--line);
+  overflow: hidden;
+  margin-top: 4px;
+}
+.stagebar i { display: block; height: 100%; background: var(--leaf); }
+
+.badge {
+  font-size: 0.78em;
+  padding: 1px 7px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  white-space: nowrap;
+}
+.badge.stage-mature, .badge.stage-tree { color: var(--leaf); border-color: var(--leaf); }
+.badge.dormant { color: #9db4c9; border-color: #9db4c9; }
+
+.mini-plant { flex: none; }
+
+/* ------------------------------------------------ journey */
+
+.year {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 10px;
+  padding: 8px 0;
+}
+.year .y {
+  font-family: ui-serif, Georgia, serif;
+  font-size: 1.15em;
+  color: var(--bloom);
+}
+.year ul { margin: 2px 0 0; padding-left: 16px; }
+.year li { margin: 2px 0; }
+
+.trophy { opacity: 1; }
+.trophy.locked { opacity: 0.45; }
+.trophy .reward { color: var(--bloom); }
+
+/* ------------------------------------------------ animation (gentle) */
+
+.sway { transform-origin: bottom center; animation: sway 6s ease-in-out infinite; }
+.drift { animation: drift 14s ease-in-out infinite alternate; }
+.twinkle { animation: twinkle 3.5s ease-in-out infinite; }
+
+@keyframes sway { 0%,100% { transform: rotate(-1.2deg); } 50% { transform: rotate(1.2deg); } }
+@keyframes drift { from { transform: translateX(0); } to { transform: translateX(26px); } }
+@keyframes twinkle { 0%,100% { opacity: 0.35; } 50% { opacity: 0.9; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .sway, .drift, .twinkle { animation: none; }
+}
+
+/* ------------------------------------------------ interaction */
+
+.plant { cursor: pointer; outline: none; }
+.plant:focus-visible .anim { filter: brightness(1.2); }
+.plant.glisten { filter: brightness(1.18) saturate(1.2); transition: filter 0.4s; }
+
+.anim { transform-box: fill-box; transform-origin: bottom center; }
+.wiggle { animation: wiggle 0.6s ease-in-out 1 !important; }
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-5deg) scaleY(1.04); }
+  60% { transform: rotate(4deg); }
+}
+
+.drop {
+  animation: dropfall 0.8s ease-in both;
+}
+@keyframes dropfall {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(var(--fall, 28px)); opacity: 0; }
+}
+
+.spark { animation: sparkle 1s ease-out both; }
+@keyframes sparkle {
+  0% { transform: translateY(0) scale(0.4); opacity: 0; }
+  30% { opacity: 1; }
+  100% { transform: translateY(-10px) scale(1); opacity: 0; }
+}
+
+.pop-flower { animation: popgrow 4s ease-out both; }
+@keyframes popgrow {
+  0% { transform: scale(0); opacity: 0; }
+  12% { transform: scale(1.15); opacity: 1; }
+  20% { transform: scale(1); }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.popover-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--leaf);
+  background: var(--card);
+  border-radius: 0 8px 8px 0;
+}
+.popover-card .name { font-weight: 600; }
+.popover-card .toast { color: var(--bloom); margin-top: 2px; }
+
+.btn {
+  font: inherit;
+  border: 1px solid var(--line);
+  background: var(--vscode-button-secondaryBackground, transparent);
+  color: var(--ink);
+  border-radius: 5px;
+  padding: 4px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn:hover:not(:disabled) { border-color: var(--leaf); }
+.btn:disabled { opacity: 0.6; cursor: default; }
+.btn.ghost { border: none; background: transparent; color: var(--muted); padding: 4px 6px; }
+.btn:focus-visible { outline: 1px solid var(--vscode-focusBorder); }
+
+.hint { margin: 6px 2px 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .wiggle, .drop, .spark, .pop-flower { animation: none !important; }
+}
+
+/* ------------------------------------------------ nursery picker */
+
+.nursery {
+  margin-top: 6px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: 8px;
+}
+.nursery-head { margin-bottom: 6px; }
+.nursery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+  gap: 4px;
+}
+.species {
+  appearance: none;
+  font: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: 5px 2px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+.species:hover:not(:disabled) { border-color: var(--leaf); color: var(--ink); }
+.species:focus-visible { outline: 1px solid var(--vscode-focusBorder); }
+.species.current { border-color: var(--bloom); color: var(--ink); cursor: default; }
+.species svg { display: block; }
